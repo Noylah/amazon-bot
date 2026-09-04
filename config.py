@@ -1,14 +1,22 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 ADMIN_GROUP_ID = int(os.getenv("ADMIN_GROUP_ID", "-1004354827440"))
+CEO_USERNAME = os.getenv("CEO_USERNAME", "").lstrip("@").strip().lower()
 
+ROLES = (
+    "C.E.O.",
+    "Dirigente Operativo",
+    "Assistente Esecutivo",
+    "Manager di Linea",
+    "Dipendente",
+    "Dipendente in Prova",
+)
 
-def _parse_ids(value: str) -> set[int]:
-    return {int(item.strip()) for item in value.split(",") if item.strip().isdigit()}
-
-
-ADMIN_IDS = _parse_ids(os.getenv("ADMIN_IDS", ""))
+ROLE_LEVELS = {role: len(ROLES) - index for index, role in enumerate(ROLES)}
 
 
 if not BOT_TOKEN:
